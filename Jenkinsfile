@@ -1,8 +1,9 @@
 pipeline {
-    agent any
-    tools {
-        maven 'mvn-3.6.3'
-        jdk 'open-jdk8'
+    agent {
+        docker {
+            image 'maven:3-alpine'
+            args '-v /root/.m2:/root/.m2'
+        }
     }
     stages {
         stage('Check out git repo') {
