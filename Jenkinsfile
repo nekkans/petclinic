@@ -15,19 +15,6 @@ pipeline {
                sh 'mvn clean install'
             }
         }
-
-        stage('Sonar analysis') {
-            environment {
-                scannerHome = tool 'sonar-scanner'
-            }
-
-            steps {
-                withSonarQubeEnv("mysonar-server") {
-                    sh "${scannerHome}/bin/sonar-scanner"
-                }
-
-           }
-        }
         stage ('Artifactory configuration') {
             steps {
                 rtServer (
@@ -60,7 +47,7 @@ pipeline {
                 )
             }
         }
-         stage('Deploy to production') {
+        stage('Deploy to production') {
             steps {
                 echo "Deploy Spring petclinic"
                //sshagent(credentials : ['vagrant-user-with-key']) {
